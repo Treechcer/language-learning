@@ -32,4 +32,4 @@ class Token:
             if token == i:
                 return Token(Token.keywords[i], token, linePos)
         
-        return Token("INDENTIFIER", token, linePos)
+        return Token("IDENTIFIER", token, linePos)

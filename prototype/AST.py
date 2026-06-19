@@ -1,39 +1,35 @@
-from dataclasses import dataclass, field
-from typing import List, Union, Literal
+class AST:
+    astTypes = {
+        "PROGRAM",
+        "FUNCTION",
+        "BINARYOP",
+        "LEFTPARAN",
+        "RIGHTPARAN",
+        "ASSIGN",
+        "NUMBER",
+        "END",
+    }
 
-NodeType = Literal[
-    "Program",
-    "NumericLiteral",
-    "Identifier",
-    "BinaryExpr",
-]
-
-@dataclass
-class Stmt:
-    kind: NodeType
-
-@dataclass
-class Program(Stmt):
-    kind: "Program"
-    body: List[Stmt] = field(default_factory=list)
-
-@dataclass
-class Expression(Stmt):
-    pass
-
-@dataclass
-class BinaryExpression(Expression):
-    kind: "BinaryExpression"
-    left: Expression
-    right: Expression
-    operator: str
-
-@dataclass
-class Identifier(Expression):
-    kind: "Identifier"
-    symbol: str
-
-@dataclass
-class NumericLiteral(Expression):
-    kind: "Identifier"
-    value: float
+    @staticmethod
+    def PROGRAM(body):
+        return {"type" : "PROGRAM", "body" : body}
+    
+    @staticmethod
+    def FUNCTION(name, body, params):
+        return {"type" : "FUNCTION", "name" : name, "params" : params, "body" : body}
+    
+    @staticmethod
+    def BINARYOP(left, operator, right):
+        return {"type" : "BINARYOP", "left" : left, "right" : right, "operator" : operator}
+    
+    @staticmethod
+    def ASSIGN(left, right):
+        return {"type" : "ASSIGN", "left" : left, "right" : right}
+    
+    @staticmethod
+    def NUMBER(value):
+        return {"type": "NUMBER", "value": value}
+    
+    @staticmethod
+    def IDENTIFIER(name):
+        return {"type": "IDENTIFIER", "name": name}

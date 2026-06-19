@@ -17,12 +17,14 @@ class Lexer:
 
                 for tok in line.split(" "):
                     tok = tok.strip()
+                    if not tok:
+                        continue
+                    
                     Lexer.tokens.append(Token.evaluateToken(tok, lineCount))
-                    print(Lexer.tokens[-1].tokenType, Lexer.tokens[-1].value, Lexer.tokens[-1].linePos)
+                    #print(Lexer.tokens[-1].tokenType, Lexer.tokens[-1].value, Lexer.tokens[-1].linePos)
 
                 lineCount += 1
         
-        print(Lexer.tokens)
+        #print(Lexer.tokens)
 
-lex = Lexer()
-lex.lexFile()
+        return Lexer.tokens
