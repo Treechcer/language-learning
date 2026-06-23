@@ -164,10 +164,10 @@ class Parser:
             return NumberNode(tok)
 
     def term(self):
-        return self.bin_op(self.advance, (TT_DIV, TT_MUL))
+        return self.bin_op(self.factor, (TT_DIV, TT_MUL))
 
     def expr(self):
-        return self.bin_op(self.advance, (TT_PLUS, TT_MINUS))
+        return self.bin_op(self.term, (TT_PLUS, TT_MINUS))
 
     def bin_op(self, func, ops):
         left = func()
@@ -183,7 +183,7 @@ class Parser:
 def run(fn, text):
     lexer = Lexer(fn, text)
     tokens, error = lexer.make_tokens()
-
+    print(tokens)
     if error:
         return None, error 
 
