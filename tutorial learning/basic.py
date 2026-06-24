@@ -203,7 +203,7 @@ class Parser:
 
     def parse(self):
         res = self.expr()
-        if not res.error and self.current_tok.type != "EOF": 
+        if not res.error and self.current_tok.type != TT_EOF:
             return res.faililure(InvalidSyntaxError(self.current_tok.pos_start, self.current_tok.pos_end, "Expected '+', '-', '*' or '/'"))
         return res
 
@@ -221,10 +221,10 @@ class Parser:
             expr = res.register(self.expr())
             if res.error: return res.error
             if self.current_tok.type == TT_RPAREN:
-                res.register(self.advance)
+                res.register(self.advance())
                 return res.success(expr)
             else:
-                return res.faililure(self.current_tok.pos_start, self.current_tok.pos_end, "Expected ')'")
+                return res.faililure(InvalidSyntaxError(self.current_tok.pos_start, self.current_tok.pos_end, "Expected ')'"))
         elif tok.type in (TT_INT, TT_FLOAT):
             res.register(self.advance())
             return res.success(NumberNode(tok))
